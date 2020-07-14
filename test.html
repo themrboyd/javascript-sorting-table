@@ -1,0 +1,46 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<div class="container">        
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+$(document).on("click","th",function() {
+                                var tb = $(this).parents('table').eq(0)
+                                var rows = tb.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+                                this.asc = !this.asc
+                                if (!this.asc){rows = rows.reverse()}
+                                for (var i = 0; i < rows.length; i++){tb.append(rows[i])}
+                            });
+                            function comparer(index) {
+                                 return function(a, b) {
+                                    var valA = getCellValue(a, index), valB = getCellValue(b, index)
+                                    return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+                                }
+                            }
+                            function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+</script>
